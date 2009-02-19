@@ -4,8 +4,15 @@
 # :title:Amuse
 
 class Amuse < Shoes
+	require 'lib/admin'
+	require 'lib/crypt'
+	require 'lib/dashboard'
+	require 'lib/greetings'
+	require 'lib/files'
+	require 'lib/messages'
+	include AmuseHelpers
 	
-	url '/', :intro
+	url '/', :greetings
 	url '/admin', :admin
 	url '/dashboard', :dashboard
 	url '/files', :files
