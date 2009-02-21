@@ -4,6 +4,7 @@
 # :title:Amuse
 
 class Amuse < Shoes
+	require 'yaml'
 	require 'lib/admin'
 	require 'lib/crypt'
 	require 'lib/dashboard'
@@ -12,6 +13,8 @@ class Amuse < Shoes
 	require 'lib/messages'
 	require 'lib/serial_reader'
 	include AmuseHelpers
+	
+	$conf = YAML::load( File.open('amuse.conf','r').read)
 	
 	$server = Hash.new
 	url '/', :greetings
