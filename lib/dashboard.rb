@@ -9,9 +9,8 @@ module AmuseHelpers
 		end
 		@title.replace "Dashboard"
 		@display.replace "Connecting to Server..."
-		download "http://amuse.spiralix.org/app/projects" do |data|
-			@display.replace YAML::load(decrypt(data.response.body)).inspect
-		end
+		@dashboard = serial_read(:dashboard)
+		@display.replace @dashboard.inspect
 	end
 	
 end
