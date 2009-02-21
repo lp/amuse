@@ -13,6 +13,7 @@ class Amuse < Shoes
 	require 'lib/files'
 	require 'lib/messages'
 	require 'lib/serial_reader'
+	require 'lib/serial_writer'
 	include AmuseHelpers
 	
 	$conf_path = 'amuse.conf'
