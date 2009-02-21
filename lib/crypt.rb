@@ -8,6 +8,13 @@ module AmuseHelpers
 		KEY = content[:key]
 	end
 	
+	def encrypt(data)
+		c = OpenSSL::Cipher::Cipher.new("bf-cbc")
+		c.encrypt; c.key = KEY; c.iv = IV
+		e = c.update(data); e << c.final
+		e
+	end
+	
 	def decrypt(data)
 		c = OpenSSL::Cipher::Cipher.new("bf-cbc")
 		c.decrypt; c.key = KEY; c.iv = IV
