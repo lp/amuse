@@ -8,7 +8,7 @@ module AmuseHelpers
 		YAML::load(
 			decrypt(
 				Net::HTTP.get(
-					URI.parse("http://127.0.0.1:4567/#{$server[grade][:r]}#{id}.cache")
+					URI.parse("http://#{$conf[:server]}/#{$server[grade][:r]}#{id}.cache")
 				).chomp))
 	end
 
