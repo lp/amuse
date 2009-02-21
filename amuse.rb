@@ -10,17 +10,25 @@ class Amuse < Shoes
 	require 'lib/greetings'
 	require 'lib/files'
 	require 'lib/messages'
+	require 'lib/serial_reader'
 	include AmuseHelpers
 	
-	U = Hash.new
+	$server = Hash.new
 	url '/', :greetings
 	url '/admin', :admin
-	url '/dashboard', :dashboard;		U[:dashboard] = { :r => 'cache/dashboard', :w => 'app/dashboard'}
-	url '/files', :files;						U[:files] = { :r => 'files/', :w => 'app/files'}
-	url '/messages', :messages;			U[:messages] = { :r => 'cache/messages/', :w => 'app/messages'}
-																	U[:authors] = { :r 'cache/authors', :w => 'app/authors'}
-																	U[:projects] = { :r => 'cache/projects', :w => 'app/projects'}
-																	U[:threads] = { :r => 'cache/threads', :w => 'app/threads'}
+	d = :dashboard; url "/#{d.to_s}", d
+		$server[d] = { :r => "cache/#{d.to_s}", :w => "app/#{d.to_s}"}
+	f = :files; url "/#{f.to_s}", f
+		$server[f] = { :r => "#{f.to_s}/", :w => "app/#{f.to_s}"}
+	m = :messages; url '/messages', m
+		$server[m] = { :r => "cache/#{m.to_s}/", :w => "app/#{m.to_s}"}
+	a = :authors
+		$server[a] = { :r => "cache/#{a.to_s}", 	:w => "app/#{a.to_s}"}
+	p = :projects
+		$server[p] = { :r => "cache/#{p.to_s}", 	:w => "app/#{p.to_s}"}
+	t = :threads
+		$server[t] = { :r => "cache/#{t.to_s}/", 	:w => "app/#{t.to_s}"}
+	
 	private
   
   def layout
