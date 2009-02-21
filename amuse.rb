@@ -6,6 +6,7 @@
 class Amuse < Shoes
 	require 'yaml'
 	require 'lib/admin'
+	require 'lib/authors'
 	require 'lib/crypt'
 	require 'lib/dashboard'
 	require 'lib/greetings'
@@ -14,7 +15,8 @@ class Amuse < Shoes
 	require 'lib/serial_reader'
 	include AmuseHelpers
 	
-	$conf = YAML::load( File.open('amuse.conf','r').read)
+	$conf_path = 'amuse.conf'
+	$conf = YAML::load( File.open($conf_path,'r').read)
 	
 	$server = Hash.new
 	url '/', :greetings
@@ -25,7 +27,7 @@ class Amuse < Shoes
 		$server[f] = { :r => "#{f.to_s}/", :w => "app/#{f.to_s}"}
 	m = :messages; url '/messages', m
 		$server[m] = { :r => "cache/#{m.to_s}/", :w => "app/#{m.to_s}"}
-	a = :authors
+	a = :authors; url "/#{a.to_s}", a
 		$server[a] = { :r => "cache/#{a.to_s}", 	:w => "app/#{a.to_s}"}
 	p = :projects
 		$server[p] = { :r => "cache/#{p.to_s}", 	:w => "app/#{p.to_s}"}
