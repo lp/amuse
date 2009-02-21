@@ -12,12 +12,15 @@ class Amuse < Shoes
 	require 'lib/messages'
 	include AmuseHelpers
 	
+	U = Hash.new
 	url '/', :greetings
 	url '/admin', :admin
-	url '/dashboard', :dashboard
-	url '/files', :files
-	url '/messages', :messages
-	
+	url '/dashboard', :dashboard;		U[:dashboard] = { :r => 'cache/dashboard', :w => 'app/dashboard'}
+	url '/files', :files;						U[:files] = { :r => 'files/', :w => 'app/files'}
+	url '/messages', :messages;			U[:messages] = { :r => 'cache/messages/', :w => 'app/messages'}
+																	U[:authors] = { :r 'cache/authors', :w => 'app/authors'}
+																	U[:projects] = { :r => 'cache/projects', :w => 'app/projects'}
+																	U[:threads] = { :r => 'cache/threads', :w => 'app/threads'}
 	private
   
   def layout
