@@ -1,7 +1,26 @@
 module AmuseHelpers
 	
 	def dashboard
+		@dashboard = serial_read(:dashboard)
 		layout do
+			stack do
+				unless @dashboard.first.empty?
+					@dashboard.each do |t|
+						para( t[:title],
+		          :size => 14, 
+		          :align => "Left", 
+		          :font => "Trebuchet MS", 
+		          :stroke => red
+		        )
+						para( t[:message],
+		          :size => 12, 
+		          :align => "left", 
+		          :font => "Trebuchet MS", 
+		          :stroke => white
+		        )
+					end
+				end
+			end
 			flow do
 				button("Files", :margin => 10) { clear; files }
 				button("Messages", :margin => 10) { clear; messages }
@@ -9,9 +28,7 @@ module AmuseHelpers
 			end
 		end
 		@title.replace "Dashboard"
-		@display.replace "Connecting to Server..."
-		@dashboard = serial_read(:dashboard)
-		@display.replace @dashboard.inspect
+		@display.replace "Recent Messages:"
 	end
 	
 end
