@@ -27,7 +27,7 @@ class Amuse < Shoes
 	f = :files; url "/#{f.to_s}", f
 		$server[f] = { :r => "#{f.to_s}/", :w => "app/#{f.to_s}"}
 	m = :messages; url '/messages', m
-		$server[m] = { :r => "cache/#{m.to_s}/", :w => "app/#{m.to_s}"}
+		$server[m] = { :r => "cache/projects/", :w => "app/#{m.to_s}"}
 	a = :authors; url "/#{a.to_s}", a
 		$server[a] = { :r => "cache/#{a.to_s}", 	:w => "app/#{a.to_s}"}
 	p = :projects
