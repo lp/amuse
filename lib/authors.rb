@@ -2,12 +2,12 @@ module AmuseHelpers
 	
 	def authors
 		new_info = {:name => '', :nickname => '', :email => ''}; @author = Hash.new
-		unless $conf[:author].nil?
-			authors_list = serial_read(:authors)
-			unless authors_list.first.empty?
-				new_info = authors_list.select { |a| a[:id] == $conf[:author] }.first
-			end
-		end
+		# unless $conf[:author].nil?
+		# 			authors_list = serial_read(:authors)
+		# 			unless authors_list.first.empty?
+		# 				new_info = authors_list.select { |a| a[:id] == $conf[:author] }.first
+		# 			end
+		# 		end
 		layout do
 			flow do
 				colorContent('Name:', red)
@@ -37,9 +37,9 @@ module AmuseHelpers
 	
 	def store_author(author_hash)
 		if author_hash[:id].nil?
-			serial_write(:authors,:new,author_hash)
+			$conf[:author] = serial_write(:authors,:new,author_hash).to_i
 		else
-			serial_write(:authors,:update,author_hash)
+			$conf[:author] = serial_write(:authors,:update,author_hash).to_i
 		end
 	end
 	
