@@ -6,6 +6,7 @@ module AmuseHelpers
 		end
 		@title.replace "Messages"
 		@display.replace "(in development...)"
+		
 	end
 	
 end

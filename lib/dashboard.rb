@@ -5,6 +5,7 @@ module AmuseHelpers
 			flow do
 				button("Files", :margin => 10) { clear; files }
 				button("Messages", :margin => 10) { clear; messages }
+				button("Admin", :margin => 10) {clear; admin}
 			end
 		end
 		@title.replace "Dashboard"
