@@ -4,7 +4,6 @@ module AmuseHelpers
 	require 'uri'
 	
 	def serial_read(grade,id1='',id2='')
-		@display.replace 'Fetching cached data '
 		YAML::load(
 			decrypt(
 				Net::HTTP.get(
