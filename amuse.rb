@@ -13,6 +13,7 @@ class Amuse < Shoes
 	require 'lib/files'
 	require 'lib/messages'
 	require 'lib/projects'
+	require 'lib/threads'
 	require 'lib/serial_reader'
 	require 'lib/serial_writer'
 	include AmuseHelpers
@@ -33,8 +34,8 @@ class Amuse < Shoes
 		$server[a] = { :r => "cache/#{a.to_s}", 	:w => "app/#{a.to_s}"}
 	p = :projects; url "/#{p.to_s}", p
 		$server[p] = { :r => "cache/#{p.to_s}", 	:w => "app/#{p.to_s}"}
-	t = :threads
-		$server[t] = { :r => "cache/#{t.to_s}/", 	:w => "app/#{t.to_s}"}
+	t = :threads; url "/#{t.to_s}", t
+		$server[t] = { :r => "cache/projects/", 	:w => "app/#{t.to_s}"}
 	
 	private
   
