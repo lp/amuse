@@ -34,8 +34,8 @@ module AmuseHelpers
 	# 						end
 	
 	def put_file
-								uri = URI.parse('http://127.0.0.1:4567/upload/new/goo/Numerology2-2.0.0.dmg')
-								path = 'Numerology2-2.0.0.dmg'; block_size = 2097152; done = 0
+								uri = URI.parse('http://amuse.spiralix.org/upload/new/goo/bogus.pdf')
+								path = 'bogus.pdf'; block_size = 2097152; done = 0
 								digest = Digest::SHA1.digest(path)
 								File.open(path,'r') do |file|
 									while part = file.read(block_size)
