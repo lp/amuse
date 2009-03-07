@@ -33,7 +33,7 @@ module AmuseHelpers
 			end
 			stack do
 				unless @dashboard.first.empty?
-					@dashboard.each do |t|
+					@dashboard.reverse.each do |t|
 						colorContent('Title:', white)
 						para( t[:title],
 		          :size => 14, 
