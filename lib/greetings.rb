@@ -1,3 +1,7 @@
+# Author:: lp (mailto:lp@spiralix.org)
+# Copyright:: 2009 Louis-Philippe Perron - Released under the terms of the MIT license
+# 
+# :title:AmuseHelpers
 module AmuseHelpers
 	
 	def greetings
@@ -5,11 +9,12 @@ module AmuseHelpers
 			alert("Please define your server before the fun starts!!")
 			clear; admin
 		else
-			layout do
-				button("START", :margin => 10) { clear; dashboard }
+			layout(:scroll => true) do
+				stroke black; fill darkgray
+				rect :top => 120, :left => 110, :width => 340, :height => 260, :curve => 20
+				button("START", :top => 340, :left => 350) { clear; dashboard }
 			end
-			@title.replace "Bienvenido!!"
-			@display.replace "Welcome to Amuse!!!"
+			@title.replace "Login"
 		end
 	end
 	
