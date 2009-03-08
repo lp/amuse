@@ -3,7 +3,7 @@ module AmuseHelpers
 	def dashboard
 		@dashboard = serial_read(:dashboard)
 		@projects = serial_read(:projects)
-		layout do
+		layout :scroll => true do
 			stack do
 				colorContent('Projects:', white)
 				unless @projects.first.empty?
