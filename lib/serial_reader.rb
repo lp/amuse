@@ -7,12 +7,12 @@ module AmuseHelpers
 	require 'net/http'
 	require 'uri'
 	
-	def serial_read(grade,id1='',id2='')
+	def serial_read(author_id,key,grade,id1='',id2='')
 		YAML::load(
 			decrypt(
-				Net::HTTP.get(
-					URI.parse("http://#{$conf[:server]}/#{$server[grade][:r]}#{id1}#{id2}.cache")
-				).chomp))
+				Net::HTTP.post_form(
+					URI.parse("http://#{$conf[:server]}/#{$server[grade][:r]}#{id1}#{id2}.cache"),
+						{ :a => author_id, :k => key}).body))
 	end
 
 end
