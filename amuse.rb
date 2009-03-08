@@ -5,8 +5,9 @@
 
 class Amuse < Shoes
 	require 'yaml'
+	@@localdir = File.dirname( File.expand_path(__FILE__))
 	%w[admin authors crypt dashboard greetings files layout messages projects threads serial_reader serial_writer].each do |file|
-		require File.join( File.dirname( File.expand_path(__FILE__)), 'lib', file)
+		require File.join( @@localdir, 'lib', file)
 	end
 	include AmuseHelpers
 	
@@ -31,4 +32,4 @@ class Amuse < Shoes
 		$server[t] = { :r => "cache/projects/", 	:w => "app/#{t.to_s}"}
 	
 end
-Shoes.app :title => 'Amuse', :width => 900, :height => 700
+Shoes.app :title => 'Amuse', :width => 600, :height => 700
