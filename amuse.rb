@@ -11,6 +11,7 @@ class Amuse < Shoes
 	end
 	include AmuseHelpers
 	
+	$runtime = Hash.new
 	$conf_path = 'amuse.conf'
 	$conf = YAML::load( File.open($conf_path,'r').read)
 	
