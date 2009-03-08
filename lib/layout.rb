@@ -43,7 +43,6 @@ module AmuseHelpers
     return para( text,
       :size => 12,
       :align => 'left',
-      :margin => 15,
       :font => "Trebuchet MS",
       :stroke => color
     )
