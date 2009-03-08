@@ -4,10 +4,15 @@
 # :title:AmuseHelpers
 module AmuseHelpers
 	
-	def connect(author_id=nil,&block)
+	def connect(origin='greetings',&block)
 		layout do
-			button("cancel")
+			stack :top => 100, :left => 40 do
+				stroke black; fill gainsboro
+				rect :width => 480, :height => 360, :curve => 20
+				button "cancel", :top => 300, :left => 400 { eval(origin) }
+			end
 		end
+		@title.replace "Connect"
 		block.call
 	end
 	
