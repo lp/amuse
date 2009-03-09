@@ -11,7 +11,7 @@ module AmuseHelpers
 		Crypt.decrypt(
 			Net::HTTP.post_form(
 				URI.parse( "http://#{$conf[:server]}/#{$server[grade][:w]}/#{operation.to_s}"),
-					{ :o => Crypt.encrypt( YAML::dump( object)) }).body)
+					{ :o => Crypt.encrypt( YAML::dump( object)) }).body.chomp)
 	end
 	
 end

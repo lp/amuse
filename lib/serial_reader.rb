@@ -12,7 +12,7 @@ module AmuseHelpers
 			Crypt.decrypt(
 				Net::HTTP.post_form(
 					URI.parse("http://#{$conf[:server]}/#{$server[grade][:r]}#{id1}#{id2}.cache"),
-						{ :a => author_id, :k => key}).body))
+						{ :a => author_id, :k => key}).body.chomp))
 	end
 
 end
