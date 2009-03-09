@@ -8,10 +8,10 @@ module AmuseHelpers
 	require 'uri'
 	
 	def serial_write(grade,operation,object)
-		decrypt(
+		Crypt.decrypt(
 			Net::HTTP.post_form(
 				URI.parse( "http://#{$conf[:server]}/#{$server[grade][:w]}/#{operation.to_s}"),
-					{ :o => encrypt( YAML::dump( object)) }).body)
+					{ :o => Crypt.encrypt( YAML::dump( object)) }).body)
 	end
 	
 end
