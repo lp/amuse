@@ -7,7 +7,6 @@ class Keys
 	require 'net/http'
 	require 'uri'
 	require File.join( File.dirname( File.expand_path(__FILE__)), 'crypt')
-	include AmuseHelpers
 	
 	@@keys = Array.new
 	
@@ -20,34 +19,38 @@ class Keys
 	end
 	
 	def Keys.temp
+		body = Net::HTTP.post_form(
+			URI.parse( "http://#{$conf[:server]}/auth"),
+				{ :a => 'ipkey' }).body.chomp
+		Shoes.debug("body: #{body.inspect}")
 		challenge = YAML::load(
-			decrypt(
-				Net::HTTP.post_form(
-					URI.parse( "http://#{$conf[:server]}/auth"),
-						{ :a => 'ipkey' }).body))
+			Crypt.decrypt(
+				body))
 		response = Keys.do_challenge(challenge)
-		key = decrypt(
-			Net::HTTP.post_form(
-				URI.parse( "http://#{$conf[:server]}/auth"),
-					{ :a => 'ipkey', :r => encrypt( response) }).body))
+		body = Net::HTTP.post_form(
+			URI.parse( "http://#{$conf[:server]}/auth"),
+				{ :a => 'ipkey', :r => Crypt.encrypt( response) }).body.chomp
+		Shoes.debug("body: #{body.inspect}")
+		key = Crypt.decrypt(body
+			)
 	end
 	
 	def Keys.get
 		challenge = YAML::load(
-			decrypt(
+			Crypt.decrypt(
 				Net::HTTP.post_form(
 					URI.parse( "http://#{$conf[:server]}/auth"),
-						{ :a => $runtime[:author][:id] }).body))
+						{ :a => $runtime[:author][:id] }).body.chomp))
 		response = do_challenge(challenge)
 		@@keys = YAML::load(
-			decrypt(
+			Crypt.decrypt(
 				Net::HTTP.post_form(
 					URI.parse( "http://#{$conf[:server]}/auth"),
-						{ :a => 'ipkey', :r => encrypt( response) }).body))		
+						{ :a => 'ipkey', :r => Crypt.encrypt( response) }).body.chomp))		
 	end
 	
 	def Keys.do_challenge(challenge)
-		eval(challenge[1].to_s+challenge[0]+challenge[2].to_s).to_s
+		eval(challenge[1].to_s+'.0'+challenge[0]+challenge[2].to_s).to_s
 	end
 	
 	
