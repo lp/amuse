@@ -5,7 +5,6 @@
 module AmuseHelpers
 	
 	def greetings
-		debug("greetings")
 		login = Hash.new
 		if $conf[:server].nil?
 			alert("Please define your server before the fun starts!!")
@@ -51,16 +50,20 @@ module AmuseHelpers
 	
 	def logon
 		lambda {
-			debug 'greetings block'
 			key = Keys.temp
 			authors_list = serial_read('ipkey',key,:authors)
-			selected = authors_list.select { |a| $conf[:author] =~ /#{a[:name]}|#{a[:nickname]}/i}
-			if selected.empty?
+			if authors_list.nil?
 				alert("You need to register as an Author First!!!")
 				clear; authors
 			else
-				$runtime[:author] = selected.first
-				Keys.get; clear; dashboard
+				selected = authors_list.select { |a| $conf[:author] =~ /#{a[:name]}|#{a[:nickname]}/i}
+				if selected.empty?
+					alert("You need to register as an Author First!!!")
+					clear; authors
+				else
+					$runtime[:author] = selected.first
+					Keys.get; clear; dashboard
+				end
 			end
 		}
 	end
