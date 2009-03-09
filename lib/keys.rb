@@ -19,20 +19,16 @@ class Keys
 	end
 	
 	def Keys.temp
-		body = Net::HTTP.post_form(
-			URI.parse( "http://#{$conf[:server]}/auth"),
-				{ :a => 'ipkey' }).body.chomp
-		Shoes.debug("body: #{body.inspect}")
 		challenge = YAML::load(
 			Crypt.decrypt(
-				body))
+				Net::HTTP.post_form(
+					URI.parse( "http://#{$conf[:server]}/auth"),
+						{ :a => 'ipkey' }).body.chomp)
 		response = Keys.do_challenge(challenge)
-		body = Net::HTTP.post_form(
-			URI.parse( "http://#{$conf[:server]}/auth"),
-				{ :a => 'ipkey', :r => Crypt.encrypt( response) }).body.chomp
-		Shoes.debug("body: #{body.inspect}")
-		key = Crypt.decrypt(body
-			)
+		key = Crypt.decrypt(
+			Net::HTTP.post_form(
+				URI.parse( "http://#{$conf[:server]}/auth"),
+					{ :a => 'ipkey', :r => Crypt.encrypt( response) }).body.chomp)
 	end
 	
 	def Keys.get
@@ -50,7 +46,7 @@ class Keys
 	end
 	
 	def Keys.do_challenge(challenge)
-		eval(challenge[1].to_s+'.0'+challenge[0]+challenge[2].to_s).to_s
+		eval(challenge[1].to_s+challenge[0]+challenge[2].to_s).to_s
 	end
 	
 	
