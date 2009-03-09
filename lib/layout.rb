@@ -37,6 +37,15 @@ module AmuseHelpers
 		stack(:top => 130, :left => 20,:height => 560,:width => 560,:scroll => args[:scroll]) do
       yield if block_given?
     end
+		stack :top => 600, :left => 20 do
+			stack :top => 1, :left => 5 do
+				stroke white; fill gray
+				rect :height => 42, :width => 550, :curve => 1
+			end
+			stack :top => 2, :left => 7, :height => 40, :width => 546 do
+				@realtime = para 'Ready...', :size => 16, :font => "Trebuchet MS", :stroke => tomato
+			end
+		end
   end
 	
   def colorContent(text,color)
