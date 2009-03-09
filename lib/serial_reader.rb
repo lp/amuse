@@ -9,7 +9,7 @@ module AmuseHelpers
 	
 	def serial_read(author_id,key,grade,id1='',id2='')
 		YAML::load(
-			decrypt(
+			Crypt.decrypt(
 				Net::HTTP.post_form(
 					URI.parse("http://#{$conf[:server]}/#{$server[grade][:r]}#{id1}#{id2}.cache"),
 						{ :a => author_id, :k => key}).body))
