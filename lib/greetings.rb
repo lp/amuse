@@ -5,6 +5,7 @@
 module AmuseHelpers
 	
 	def greetings
+		debug("greetings")
 		login = Hash.new
 		if $conf[:server].nil?
 			alert("Please define your server before the fun starts!!")
@@ -33,10 +34,13 @@ module AmuseHelpers
 						stack :top => 5, :left => 80 do
 							login[:server] = edit_line($conf[:server], :width => 180)
 						end
+						stack
 					end
-					button("START", :top => 220, :left => 240) { 	$conf[:author] = login[:author].text
+					button("START", :top => 220, :left => 240) {  $conf[:author] = login[:author].text
 																												$conf[:server] = login[:server].text
-																												store_conf; clear; login}
+																												store_conf
+																												clear
+																												connect('greetings',logon) }
 				end
 			end
 			@title.replace "Login"
@@ -45,8 +49,9 @@ module AmuseHelpers
 	
 	private
 	
-	def login
-		connect('greetings') do
+	def logon
+		lambda {
+			debug 'greetings block'
 			key = Keys.temp
 			authors_list = serial_read('ipkey',key,:authors)
 			selected = authors_list.select { |a| $conf[:author] =~ /#{a[:name]}|#{a[:nickname]}/i}
@@ -57,7 +62,7 @@ module AmuseHelpers
 				$runtime[:author] = selected.first
 				Keys.get; clear; dashboard
 			end
-		end
+		}
 	end
 	
 end
